@@ -1,0 +1,47 @@
+{
+	"name": "shifter",
+	"displayName": "Shifter",
+	"description": "Shift arguments and parameters",
+	"version": "0.0.1",
+	"icon": "shifter.png",
+	"publisher": "Gruntfuggly",
+	"engines": {
+		"vscode": "^1.5.0"
+	},
+	"repository": "https://github.com/Gruntfuggly/shifter",
+	"categories": [
+		"Other"
+	],
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "shifter configuration"
+		},
+		"commands": [
+			{
+				"command": "shiftArgumentLeft",
+				"title": "Shift argument to the left"
+			},
+			{
+				"command": "shiftArgumentRight",
+				"title": "Shift argument to the right"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "shiftArgumentLeft",
+				"key": "alt+s left",
+				"when": "editorTextFocus && !editorReadonly"
+			},
+			{
+				"command": "shiftArgumentRight",
+				"key": "alt+s right",
+				"when": "editorTextFocus && !editorReadonly"
+			}
+		]
+	},
+	"activationEvents": [
+		"*"
+	],
+	"main": "./extension"
+}
