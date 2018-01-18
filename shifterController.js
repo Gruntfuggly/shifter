@@ -22,7 +22,6 @@ var ShifterController = ( function()
 
     ShifterController.prototype._onChangeEditor = function()
     {
-        this._shifter.updateConfig();
         this._shifter.update();
     };
 
