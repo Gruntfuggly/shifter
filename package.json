@@ -2,7 +2,7 @@
 	"name": "shifter",
 	"displayName": "Shifter",
 	"description": "Shift arguments and parameters",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"icon": "shifter.png",
 	"publisher": "Gruntfuggly",
 	"engines": {
@@ -32,6 +32,16 @@
 			{
 				"command": "shiftArgumentRight",
 				"key": "alt+s right",
+				"when": "editorTextFocus && !editorReadonly"
+			},
+			{
+				"command": "shiftArgumentLeft",
+				"key": "ctrl+alt+left",
+				"when": "editorTextFocus && !editorReadonly"
+			},
+			{
+				"command": "shiftArgumentRight",
+				"key": "ctrl+alt+right",
 				"when": "editorTextFocus && !editorReadonly"
 			}
 		]

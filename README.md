@@ -4,7 +4,7 @@ Allows arguments (or other comma separated lists contained in brackets, braces, 
 
 <img src="https://raw.githubusercontent.com/Gruntfuggly/shifter/master/shifter.gif">
 
-By default it defines "Alt+S Left" to move arguments left and "Alt+S Right" to move them right. You can also use the commands "Shift argument to the left" and "Shift argument to the right" from the command menu.
+By default it defines "Alt+S Left" and "Ctrl+Alt+Left" to move arguments left and "Alt+S Right" and "Ctrl+Alt+Right" to move them right. You can also use the commands "Shift argument to the left" and "Shift argument to the right" from the command menu.
 
 ## Installing
 
