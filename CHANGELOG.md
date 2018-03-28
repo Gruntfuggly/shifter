@@ -1,3 +1,6 @@
+# v0.0.4 - 2018-03-28
+- Fix selection after update
+
 # v0.0.3 - 2018-01-18
 - Add alternative keybindings (ctrl+alt+left/right)
 

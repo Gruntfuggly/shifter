@@ -132,14 +132,14 @@ var Shifter = ( function()
         this.splice( newIndex, 0, this.splice( oldIndex, 1 )[ 0 ] );
     };
 
-    function makeUpdate( list )
+    function makeUpdate( list, done )
     {
         const editor = vscode.window.activeTextEditor;
         var edit = new vscode.WorkspaceEdit();
         var range = new vscode.Range( editor.document.positionAt( listStart ), editor.document.positionAt( listEnd ) );
         var replacement = list.join( "," );
         edit.replace( editor.document.uri, range, replacement );
-        vscode.workspace.applyEdit( edit );
+        vscode.workspace.applyEdit( edit ).then( done );
     }
 
     function getElements()
@@ -179,10 +179,11 @@ var Shifter = ( function()
             {
                 list.elements.move( list.currentElement, list.currentElement - 1 );
 
-                makeUpdate( list.elements );
-
-                var newPosition = editor.document.positionAt( originalPosition - list.elements[ list.currentElement ].length - 1 );
-                editor.selection = new vscode.Selection( newPosition, newPosition );
+                makeUpdate( list.elements, function()
+                {
+                    var newPosition = editor.document.positionAt( originalPosition - list.elements[ list.currentElement ].length - 1 );
+                    editor.selection = new vscode.Selection( newPosition, newPosition );
+                } );
             }
         }
     };
@@ -199,10 +200,11 @@ var Shifter = ( function()
             {
                 list.elements.move( list.currentElement, list.currentElement + 1 );
 
-                makeUpdate( list.elements );
-
-                var newPosition = editor.document.positionAt( originalPosition + list.elements[ list.currentElement ].length + 1 );
-                editor.selection = new vscode.Selection( newPosition, newPosition );
+                makeUpdate( list.elements, function()
+                {
+                    var newPosition = editor.document.positionAt( originalPosition + list.elements[ list.currentElement ].length + 1 );
+                    editor.selection = new vscode.Selection( newPosition, newPosition );
+                } );
             }
         }
     };

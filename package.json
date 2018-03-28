@@ -2,7 +2,7 @@
 	"name": "shifter",
 	"displayName": "Shifter",
 	"description": "Shift arguments and parameters",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"icon": "shifter.png",
 	"publisher": "Gruntfuggly",
 	"engines": {
