@@ -132,12 +132,12 @@ var Shifter = ( function()
         this.splice( newIndex, 0, this.splice( oldIndex, 1 )[ 0 ] );
     };
 
-    function makeUpdate( list )
+    function makeUpdate( list, separator )
     {
         const editor = vscode.window.activeTextEditor;
         var edit = new vscode.WorkspaceEdit();
         var range = new vscode.Range( editor.document.positionAt( listStart ), editor.document.positionAt( listEnd ) );
-        var replacement = list.join( "," );
+        var replacement = list.join( separator );
         edit.replace( editor.document.uri, range, replacement );
         vscode.workspace.applyEdit( edit );
     }
@@ -154,6 +154,8 @@ var Shifter = ( function()
         var elements = [];
         var currentElement = -1;
         var index = 0;
+        var separator = '';
+
         while( matched = regex.exec( list ) )
         {
             elements.push( matched[ 0 ] );
@@ -162,9 +164,30 @@ var Shifter = ( function()
                 currentElement = index;
             }
             ++index;
+            separator = ',';
         }
 
-        return currentElement === -1 ? undefined : { elements: elements, currentElement: currentElement };
+        if( currentElement === -1 )
+        {
+            elements = [];
+            regex = /=(.*)\?(.*):(.*);/gm;
+            var match;
+            while( ( match = regex.exec( text ) ) !== null )
+            {
+                var queryOffset = match.index + match[ 1 ].length + 1;
+                var semicolonOffset = queryOffset + match[ 2 ].length + match[ 3 ].length + 1;
+                if( offset > queryOffset && offset < semicolonOffset )
+                {
+                    elements.push( match[ 2 ], match[ 3 ] );
+                    currentElement = offset < semicolonOffset ? 0 : 1;
+                    separator = ':';
+                    listStart = queryOffset;
+                    listEnd = semicolonOffset;
+                }
+            }
+        }
+
+        return currentElement === -1 ? undefined : { elements: elements, currentElement: currentElement, separator: separator };
     }
 
     Shifter.prototype.shiftArgumentLeft = function()
@@ -179,10 +202,12 @@ var Shifter = ( function()
             {
                 list.elements.move( list.currentElement, list.currentElement - 1 );
 
-                makeUpdate( list.elements );
+                makeUpdate( list.elements, list.separator );
 
                 var newPosition = editor.document.positionAt( originalPosition - list.elements[ list.currentElement ].length - 1 );
                 editor.selection = new vscode.Selection( newPosition, newPosition );
+                listStart = undefined;
+                listEnd = undefined;
             }
         }
     };
@@ -199,10 +224,12 @@ var Shifter = ( function()
             {
                 list.elements.move( list.currentElement, list.currentElement + 1 );
 
-                makeUpdate( list.elements );
+                makeUpdate( list.elements, list.separator );
 
                 var newPosition = editor.document.positionAt( originalPosition + list.elements[ list.currentElement ].length + 1 );
                 editor.selection = new vscode.Selection( newPosition, newPosition );
+                listStart = undefined;
+                listEnd = undefined;
             }
         }
     };
