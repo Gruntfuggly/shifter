@@ -5,6 +5,7 @@
 	"version": "0.0.4",
 	"icon": "shifter.png",
 	"publisher": "Gruntfuggly",
+    "license": "MIT",
 	"engines": {
 		"vscode": "^1.5.0"
 	},

@@ -1,3 +1,5 @@
+- Add license
+
 # v0.0.4 - 2018-03-28
 - Fix selection after update
 
