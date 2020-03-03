@@ -1,5 +1,7 @@
 # Shifter Change Log
 
+## v0.0.5 - 2020-03-03
+
 - Add license
 - Fix markdown lint errors in CHANGELOG.md and README.md
 

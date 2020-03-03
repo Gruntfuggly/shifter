@@ -2,10 +2,10 @@
 	"name": "shifter",
 	"displayName": "Shifter",
 	"description": "Shift arguments and parameters",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"icon": "shifter.png",
 	"publisher": "Gruntfuggly",
-    "license": "MIT",
+	"license": "MIT",
 	"engines": {
 		"vscode": "^1.5.0"
 	},
@@ -50,5 +50,10 @@
 	"activationEvents": [
 		"*"
 	],
-	"main": "./extension"
+	"main": "./extension",
+	"__metadata": {
+		"id": "2b57c7e0-47d0-488e-aaad-dcb6a70bcadd",
+		"publisherDisplayName": "Gruntfuggly",
+		"publisherId": "d4906d2e-f2ee-492d-9c7c-02b6160599ec"
+	}
 }
