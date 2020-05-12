@@ -1,5 +1,7 @@
 # Shifter Change Log
 
+- Format the list after shifting
+
 ## v0.0.5 - 2020-03-03
 
 - Add license

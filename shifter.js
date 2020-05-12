@@ -132,14 +132,29 @@ var Shifter = ( function()
         this.splice( newIndex, 0, this.splice( oldIndex, 1 )[ 0 ] );
     };
 
-    function makeUpdate( list, done )
+    function makeUpdate( list, repositionCursor )
     {
         const editor = vscode.window.activeTextEditor;
         var edit = new vscode.WorkspaceEdit();
         var range = new vscode.Range( editor.document.positionAt( listStart ), editor.document.positionAt( listEnd ) );
         var replacement = list.join( "," );
         edit.replace( editor.document.uri, range, replacement );
-        vscode.workspace.applyEdit( edit ).then( done );
+        vscode.workspace.applyEdit( edit ).then( function()
+        {
+            repositionCursor();
+            var formatRange = new vscode.Range( editor.document.positionAt( listStart ), editor.document.positionAt( listEnd + 1 ) );
+            vscode.commands.executeCommand(
+                'vscode.executeFormatRangeProvider',
+                editor.document.uri,
+                formatRange,
+                {}
+            ).then( function( edits )
+            {
+                var workspaceEdit = new vscode.WorkspaceEdit();
+                workspaceEdit.set( editor.document.uri, edits );
+                vscode.workspace.applyEdit( workspaceEdit );
+            } );
+        } );
     }
 
     function getElements()
