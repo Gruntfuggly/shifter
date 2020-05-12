@@ -1,5 +1,7 @@
 # Shifter Change Log
 
+## v0.0.6 - 2020-05-12
+
 - Format the list after shifting
 - Fix a bunch of javascript warnings
 

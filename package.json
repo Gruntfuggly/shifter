@@ -1,59 +1,59 @@
 {
-	"name": "shifter",
-	"displayName": "Shifter",
-	"description": "Shift arguments and parameters",
-	"version": "0.0.5",
-	"icon": "shifter.png",
-	"publisher": "Gruntfuggly",
-	"license": "MIT",
-	"engines": {
-		"vscode": "^1.5.0"
-	},
-	"repository": "https://github.com/Gruntfuggly/shifter",
-	"categories": [
-		"Other"
-	],
-	"contributes": {
-		"commands": [
-			{
-				"command": "shiftArgumentLeft",
-				"title": "Shift argument to the left"
-			},
-			{
-				"command": "shiftArgumentRight",
-				"title": "Shift argument to the right"
-			}
-		],
-		"keybindings": [
-			{
-				"command": "shiftArgumentLeft",
-				"key": "alt+s left",
-				"when": "editorTextFocus && !editorReadonly"
-			},
-			{
-				"command": "shiftArgumentRight",
-				"key": "alt+s right",
-				"when": "editorTextFocus && !editorReadonly"
-			},
-			{
-				"command": "shiftArgumentLeft",
-				"key": "ctrl+alt+left",
-				"when": "editorTextFocus && !editorReadonly"
-			},
-			{
-				"command": "shiftArgumentRight",
-				"key": "ctrl+alt+right",
-				"when": "editorTextFocus && !editorReadonly"
-			}
-		]
-	},
-	"activationEvents": [
-		"*"
-	],
-	"main": "./extension",
-	"__metadata": {
-		"id": "2b57c7e0-47d0-488e-aaad-dcb6a70bcadd",
-		"publisherDisplayName": "Gruntfuggly",
-		"publisherId": "d4906d2e-f2ee-492d-9c7c-02b6160599ec"
-	}
+    "name": "shifter",
+    "displayName": "Shifter",
+    "description": "Shift arguments and parameters",
+    "version": "0.0.6",
+    "icon": "shifter.png",
+    "publisher": "Gruntfuggly",
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.5.0"
+    },
+    "repository": "https://github.com/Gruntfuggly/shifter",
+    "categories": [
+        "Other"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "command": "shiftArgumentLeft",
+                "title": "Shift argument to the left"
+            },
+            {
+                "command": "shiftArgumentRight",
+                "title": "Shift argument to the right"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "shiftArgumentLeft",
+                "key": "alt+s left",
+                "when": "editorTextFocus && !editorReadonly"
+            },
+            {
+                "command": "shiftArgumentRight",
+                "key": "alt+s right",
+                "when": "editorTextFocus && !editorReadonly"
+            },
+            {
+                "command": "shiftArgumentLeft",
+                "key": "ctrl+alt+left",
+                "when": "editorTextFocus && !editorReadonly"
+            },
+            {
+                "command": "shiftArgumentRight",
+                "key": "ctrl+alt+right",
+                "when": "editorTextFocus && !editorReadonly"
+            }
+        ]
+    },
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./extension",
+    "__metadata": {
+        "id": "2b57c7e0-47d0-488e-aaad-dcb6a70bcadd",
+        "publisherDisplayName": "Gruntfuggly",
+        "publisherId": "d4906d2e-f2ee-492d-9c7c-02b6160599ec"
+    }
 }
