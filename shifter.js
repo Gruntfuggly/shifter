@@ -1,5 +1,5 @@
 var vscode = require( 'vscode' );
-const util = require( "./shifterUtil" );
+var util = require( "./shifterUtil" );
 
 var listStart;
 var listEnd;
@@ -21,13 +21,13 @@ var Shifter = ( function()
 
     function findBackward( text, index )
     {
-        const bracketStack = [];
-        let offset = 0;
-        let bracket = '';
+        var bracketStack = [];
+        var offset = 0;
+        var bracket = '';
 
-        for( let i = index; i >= 0; i-- )
+        for( var i = index; i >= 0; i-- )
         {
-            let char = text.charAt( i );
+            var char = text.charAt( i );
             if( util.shifterUtil.isOpenBracket( char ) )
             {
                 if( bracketStack.length === 0 )
@@ -38,7 +38,7 @@ var Shifter = ( function()
                 }
                 else
                 {
-                    let top = bracketStack.pop();
+                    var top = bracketStack.pop();
                     if( !util.shifterUtil.isMatch( char, top ) )
                     {
                         throw 'Unmatched bracket pair';
@@ -56,12 +56,12 @@ var Shifter = ( function()
 
     function findForward( text, index )
     {
-        const bracketStack = [];
-        let offset = text.length;
-        let bracket = '';
-        for( let i = index; i < text.length; i++ )
+        var bracketStack = [];
+        var offset = text.length;
+        var bracket = '';
+        for( var i = index; i < text.length; i++ )
         {
-            let char = text.charAt( i );
+            var char = text.charAt( i );
             if( util.shifterUtil.isCloseBracket( char ) )
             {
                 if( bracketStack.length === 0 )
@@ -72,7 +72,7 @@ var Shifter = ( function()
                 }
                 else
                 {
-                    let top = bracketStack.pop();
+                    var top = bracketStack.pop();
                     if( !util.shifterUtil.isMatch( top, char ) )
                     {
                         throw 'Unmatched bracket pair';
@@ -87,33 +87,36 @@ var Shifter = ( function()
         return new SearchResult( bracket, offset );
     }
 
-    Shifter.prototype.update = function()
+    function update()
     {
-        const editor = vscode.window.activeTextEditor;
+        var editor = vscode.window.activeTextEditor;
 
         if( !editor || !editor.selection.isEmpty )
         {
             return;
         }
 
-        const offset = editor.document.offsetAt( editor.selection.active );
-        const text = editor.document.getText();
+        var offset = editor.document.offsetAt( editor.selection.active );
+        var text = editor.document.getText();
 
         try
         {
-            const backwardResult = findBackward( text, offset - 1 );
-            const forwardResult = findForward( text, offset );
+            var backwardResult = findBackward( text, offset - 1 );
+            var forwardResult = findForward( text, offset );
 
             if( util.shifterUtil.isMatch( backwardResult.bracket, forwardResult.bracket ) )
             {
                 listStart = backwardResult.offset < text.length ? backwardResult.offset + 1 : backwardResult.offset;
                 listEnd = forwardResult.offset;
+                var list = text.substring( listStart, listEnd );
             }
         }
         catch( error )
         {
         }
-    };
+    }
+
+    Shifter.prototype.update = update;
 
     Shifter.prototype.dispose = function()
     {
@@ -134,7 +137,7 @@ var Shifter = ( function()
 
     function makeUpdate( list, repositionCursor )
     {
-        const editor = vscode.window.activeTextEditor;
+        var editor = vscode.window.activeTextEditor;
         var edit = new vscode.WorkspaceEdit();
         var range = new vscode.Range( editor.document.positionAt( listStart ), editor.document.positionAt( listEnd ) );
         var replacement = list.join( "," );
@@ -152,16 +155,16 @@ var Shifter = ( function()
             {
                 var workspaceEdit = new vscode.WorkspaceEdit();
                 workspaceEdit.set( editor.document.uri, edits );
-                vscode.workspace.applyEdit( workspaceEdit );
+                vscode.workspace.applyEdit( workspaceEdit ).then( update );
             } );
         } );
     }
 
     function getElements()
     {
-        const editor = vscode.window.activeTextEditor;
-        const text = editor.document.getText();
-        const offset = editor.document.offsetAt( editor.selection.active );
+        var editor = vscode.window.activeTextEditor;
+        var text = editor.document.getText();
+        var offset = editor.document.offsetAt( editor.selection.active );
 
         var list = text.substring( listStart, listEnd );
         var regex = /(?:[^,]+|\\.)+/g;
@@ -169,7 +172,7 @@ var Shifter = ( function()
         var elements = [];
         var currentElement = -1;
         var index = 0;
-        while( matched = regex.exec( list ) )
+        while( ( matched = regex.exec( list ) ) !== null )
         {
             elements.push( matched[ 0 ] );
             if( offset >= listStart + matched.index && offset <= listStart + matched.index + matched[ 0 ].length )
@@ -184,8 +187,8 @@ var Shifter = ( function()
 
     Shifter.prototype.shiftArgumentLeft = function()
     {
-        const editor = vscode.window.activeTextEditor;
-        const originalPosition = editor.document.offsetAt( editor.selection.active );
+        var editor = vscode.window.activeTextEditor;
+        var originalPosition = editor.document.offsetAt( editor.selection.active );
 
         var list = getElements();
         if( list )
@@ -205,8 +208,8 @@ var Shifter = ( function()
 
     Shifter.prototype.shiftArgumentRight = function()
     {
-        const editor = vscode.window.activeTextEditor;
-        const originalPosition = editor.document.offsetAt( editor.selection.active );
+        var editor = vscode.window.activeTextEditor;
+        var originalPosition = editor.document.offsetAt( editor.selection.active );
 
         var list = getElements();
         if( list )
